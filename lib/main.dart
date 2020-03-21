@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'themes.dart';
+import 'package:bmicalc/themes.dart';
+import 'package:bmicalc/customwidgets/custominput.dart';
 
 void main() => runApp(Myapp());
 
@@ -7,26 +8,24 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'BMI',
       theme: ThemeData(
         backgroundColor: secondaryColor,
         scaffoldBackgroundColor: secondaryColor,
         cursorColor: primaryColor,
         accentColor: primaryColor,
-       
         appBarTheme: AppBarTheme(
           color: primaryColor,
           brightness: Brightness.light,
           textTheme: TextTheme(
             title: TextStyle(
-              color: primaryTextColor,
+              color: Colors.white70,
               fontSize: 22.0,
               fontWeight: FontWeight.w800,
             ),
           ),
         ),
-        
       ),
       home: HomePage(),
     );
@@ -91,52 +90,25 @@ class _HomePageState extends State<HomePage> {
         body: Container(
           alignment: Alignment.topCenter,
           child: ListView(padding: EdgeInsets.all(2.5), children: <Widget>[
-             Image.asset('images/bmi.jpg',
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height *0.35
-              ),
-            
-            Container(
-              margin: EdgeInsets.all(3.0),
-              alignment: Alignment.center,
-              child: Column(children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 10)),
-                TextFormField(
-                  controller: _ageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: 'Enter your age',
-                      //hintText: '',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15))
-                       ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                TextFormField(
-                  controller: _heightController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: 'enter your height',
-                      hintText: 'In feet',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                TextField(
-                  controller: _weightController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: 'enter your weight',
-                      hintText: 'In KGs',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                          
-                ),
-              ]),
-            ),
+            Image.asset('images/bmi.jpg',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.35),
+            Column(children: <Widget>[
+              //Padding(padding: EdgeInsets.only(top: 10)),
+              CustomTextinput(
+                  labelText: 'enter your age',
+                  prefixIcon: Icons.perm_identity,
+                  controller: _ageController),
+
+              CustomTextinput(
+                  labelText: 'enter your height',
+                  prefixIcon: Icons.perm_identity,
+                  controller: _heightController),
+              CustomTextinput(
+                  labelText: 'enter your weight',
+                  prefixIcon: Icons.perm_identity,
+                  controller: _weightController),
+            ]),
             Padding(padding: EdgeInsets.only(top: 16)),
             Container(
               alignment: Alignment.center,
@@ -149,26 +121,29 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       _calcBMI();
                     },
-                    child: Text(
-                      'Calculate ',
-                      style: setTextStyle(size: 20, color: primaryColor, weight: FontWeight.w800)
-                    ),
-                    color: Color(0xFF67690A),
+                    child: Text('Calculate ',
+                        style: setTextStyle(
+                            size: 20,
+                            color: primaryColor,
+                            weight: FontWeight.w800)),
+                    color: Color(0xFFACACA9),
                   ),
                 ),
               ),
             ),
             Padding(padding: EdgeInsets.only(top: 5)),
             Column(children: <Widget>[
-              Text(
-                ' $_finalresult ',
-                style: setTextStyle(size: 24, color: primaryTextColor, weight: FontWeight.normal)
-              ),
+              Text(' $_finalresult ',
+                  style: setTextStyle(
+                      size: 24,
+                      color: primaryTextColor,
+                      weight: FontWeight.normal)),
               Padding(padding: EdgeInsets.only(top: 5)),
-              Text(
-                ' $_resultread ',
-                style: setTextStyle(size: titleFontSize, color: primaryTextColor, weight: FontWeight.normal)
-              ),
+              Text(' $_resultread ',
+                  style: setTextStyle(
+                      size: titleFontSize,
+                      color: primaryTextColor,
+                      weight: FontWeight.normal)),
               // Text(
               //   ' $meters ',
               //   style: Theme.of(context).textTheme.headline,)
